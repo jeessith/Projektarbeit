@@ -1,5 +1,5 @@
 import javax.swing.*;
-
+/*  */
 public class GUI {
     private JLabel lblStandortauswahl;
     private JComboBox cbStandortwahl;
