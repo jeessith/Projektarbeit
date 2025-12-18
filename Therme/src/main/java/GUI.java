@@ -1,5 +1,5 @@
 import javax.swing.*;
-/*  */
+
 public class GUI {
     private JLabel lblStandortauswahl;
     private JComboBox cbStandortwahl;
@@ -20,3 +20,5 @@ public class GUI {
     private JComboBox cbZimmerkategorie;
     private JButton cbPreisberechnung;
 }
+
+//3 Thermen als Objekte anlegen, nichtnur eine
