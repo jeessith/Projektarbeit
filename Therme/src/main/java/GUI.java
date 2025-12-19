@@ -18,7 +18,13 @@ public class GUI {
     private JTextField txtAufenthaltsdauerÜbernachtung;
     private JLabel lblZimmerkategorie;
     private JComboBox cbZimmerkategorie;
+    private JButton cbSpeichern;
+    private JLabel lblOeffnungszeiten;
+    private JLabel lblKinderfreundlichkeit;
+    private JLabel lblBewertung;
     private JButton cbPreisberechnung;
+    private JTextField txtAusgabe;
+    private JScrollPane spAusgabe;
 }
 
 //3 Thermen als Objekte anlegen, nichtnur eine
