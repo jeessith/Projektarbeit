@@ -18,9 +18,11 @@ public class BenutzeroberflächeTherme extends JFrame {
     private JLabel lblTarifauswahl;
     private JComboBox cbTarifauswahl;
     private JLabel lblAufenthaltsdauer;
+    private JTextField txtFiltern;
+    private JLabel lblFiltern;
 
     //Listenerstellung
-    DefaultListModel< Buchungen > model = new DefaultListModel<>();
+    DefaultListModel<Buchungen> model = new DefaultListModel<>();
 
     public BenutzeroberflächeTherme() {
         setTitle("HelloWorld Thermen, die zu Ihnen passen");
@@ -46,7 +48,7 @@ public class BenutzeroberflächeTherme extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String ausgewaehlt = (String) cbStandortwahl.getSelectedItem();
 
-              //Eigenschaften unsichtbar bei keiner Auswahl
+                //Eigenschaften unsichtbar bei keiner Auswahl
                 if (ausgewaehlt == null || ausgewaehlt.isEmpty()) {
                     lblOeffnungszeiten.setVisible(false);
                     lblBarrierefreiheit.setVisible(false);
@@ -93,11 +95,19 @@ public class BenutzeroberflächeTherme extends JFrame {
                 Buchungserstellungen();
             }
         });
+        cbPreisberechnung.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filtern();
+            }
+        });
     }
+
     void main(String[] args) {
         new BenutzeroberflächeTherme();
     }
-public void initObjekte(){
+
+    public void initObjekte() {
         Buchungen b1 = new Buchungen("Therme HelloWorld Ulm", 2, "Ermäßigt", "4h", 100.0);
         Buchungen b2 = new Buchungen("Therme HelloWorld Regensburg", 4, "Erwachsen", "Tageskarte (bis zu 10h)", 300.0);
         Buchungen b3 = new Buchungen("Therme HelloWorld Kempten", 1, "Erwachsen", "2h", 50.0);
@@ -106,56 +116,66 @@ public void initObjekte(){
         model.addElement(b2);
         model.addElement(b3);
     }
-public void Buchungserstellungen(){
-    String name = cbStandortwahl.getSelectedItem().toString();
-    int Personenanzahl = Integer.parseInt(txtPersonenanzahl.getText());
-    String Tarif = cbTarifauswahl.getSelectedItem().toString();
-    String Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
 
-    // Preis berechnung
-    int zeit =0;
-    String choose1 = cbAufenthaltsdauerTherme.getSelectedItem().toString();
-    if (choose1.equals("2h")) {
-        zeit=2;
+    public void Buchungserstellungen() {
+        String name = cbStandortwahl.getSelectedItem().toString();
+        int Personenanzahl = Integer.parseInt(txtPersonenanzahl.getText());
+        String Tarif = cbTarifauswahl.getSelectedItem().toString();
+        String Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
 
-    }
-    if (choose1.equals("4h")) {
+        // Preis berechnung
+        double zeit = 0;
+        double standortpreis = 0;
 
-        zeit=4;
-    }
+        String choose2 = cbStandortwahl.getSelectedItem().toString();
+        if (choose2.equals("Ulm")) {
+            standortpreis = 10.49;
+        }
+        if (choose2.equals("Kempten")) {
+            standortpreis = 12.49;
+        }
+        if (choose2.equals("Regensburg")) {
+            standortpreis = 8.49;
+        }
 
-    if (choose1.equals("Tageskarte (bis zu 10h)")) {
+            String choose1 = cbAufenthaltsdauerTherme.getSelectedItem().toString();
+            if (choose1.equals("2h")) {
+                zeit = 2;
+            }
+            if (choose1.equals("4h")) {
+                zeit = 4;
+            }
 
-        zeit=10;
-    }
+            double preis = 0;
 
+            String choose = cbTarifauswahl.getSelectedItem().toString();
+            if (choose.equals("Ermäßigt")) {
+                 preis = zeit * standortpreis * Personenanzahl * 0.8;
+            }
+            if (choose.equals("Erwachsen")) {
+                 preis = zeit * standortpreis * Personenanzahl;
+            }
 
+            Buchungen b1 = new Buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
+            model.addElement(b1);
 
-    double preis = 0;
+            // Exception handeling
+            // Juit Test
+            // UML Diagramm
+            // Tätigkeitsprotokoll
+            // Video
+        }
+        public void filtern() {
+                DefaultListModel model2 = new DefaultListModel<>();
+                int maxPreis = Integer.parseInt(txtFiltern.getText());
 
-    String choose = cbTarifauswahl.getSelectedItem().toString();
-    if (choose.equals("Ermäßigt") ){
-        preis = Personenanzahl*10.50*zeit;
+                for (int i = 0; i < list1.getModel().getSize(); i++) {
+                    Buchungen element = (Buchungen) list1.getModel().getElementAt(i);
 
-    }
+                    if (maxPreis <= element.preis)
+                        list1.setModel(model2);
+                    model2.addElement(element);
+                }
+            }
+        }
 
-    if (choose.equals("Erwachsen") ){
-        preis = Personenanzahl*12.50*zeit;
-    }
-
-
-    Buchungen b1 = new Buchungen(name,Personenanzahl,Tarif,Aufenhaltsdauer,preis);
-    model.addElement(b1);
-
-    // Sortieren oder Filtern (Filtern
-    // Exception handeling
-    // Juit Test
-    // UML Diagramm
-    // Tätigkeitsprotokoll
-    // Video
-
-
-
-}
-
-}
