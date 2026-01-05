@@ -15,7 +15,9 @@ public class BenutzeroberflächeTherme extends JFrame {
     private JButton cbPreisberechnung;
     private JPanel mainPanel;
     private JList list1;
+    private JLabel lblTarifauswahl;
     private JComboBox cbTarifauswahl;
+    private JLabel lblAufenthaltsdauer;
 
     //Listenerstellung
     DefaultListModel< Buchungen > model = new DefaultListModel<>();
@@ -144,6 +146,13 @@ public void Buchungserstellungen(){
 
     Buchungen b1 = new Buchungen(name,Personenanzahl,Tarif,Aufenhaltsdauer,preis);
     model.addElement(b1);
+
+    // Sortieren oder Filtern (Filtern)
+    // Exception handeling
+    // Juit Test
+    // UML Diagramm
+    // Tätigkeitsprotokoll
+    // Video
 
 
 
