@@ -147,7 +147,7 @@ public void Buchungserstellungen(){
     Buchungen b1 = new Buchungen(name,Personenanzahl,Tarif,Aufenhaltsdauer,preis);
     model.addElement(b1);
 
-    // Sortieren oder Filtern (Filtern)
+    // Sortieren oder Filtern (Filtern
     // Exception handeling
     // Juit Test
     // UML Diagramm
