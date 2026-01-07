@@ -25,7 +25,7 @@ public class BenutzeroberflächeTherme extends JFrame {
     DefaultListModel<Buchungen> model = new DefaultListModel<>();
 
     public BenutzeroberflächeTherme() {
-        setTitle("HelloWorld Thermen, die zu Ihnen passen");
+        setTitle("HelloWorld Thermenangebote");
         setSize(850, 600);
         setContentPane(mainPanel);
         setVisible(true);
@@ -33,9 +33,11 @@ public class BenutzeroberflächeTherme extends JFrame {
         list1.setModel(model);
         initObjekte();
 
+        cbStandortwahl.addItem("Bitte wählen...");
         cbStandortwahl.addItem("Ulm");
         cbStandortwahl.addItem("Regensburg");
         cbStandortwahl.addItem("Kempten");
+        cbTarifauswahl.addItem("Bitte wählen...");
         cbTarifauswahl.addItem("Ermäßigt");
         cbTarifauswahl.addItem("Erwachsen");
 
@@ -85,6 +87,7 @@ public class BenutzeroberflächeTherme extends JFrame {
         });
 
 
+        cbAufenthaltsdauerTherme.addItem("Bitte wählen...");
         cbAufenthaltsdauerTherme.addItem("2h");
         cbAufenthaltsdauerTherme.addItem("4h");
         cbAufenthaltsdauerTherme.addItem("Tageskarte (bis zu 10h)");
@@ -145,9 +148,11 @@ public class BenutzeroberflächeTherme extends JFrame {
             if (choose1.equals("4h")) {
                 zeit = 4;
             }
+        if (choose1.equals("Tageskarte (bis zu 10h)")) {
+            zeit = 10;
+        }
 
             double preis = 0;
-
             String choose = cbTarifauswahl.getSelectedItem().toString();
             if (choose.equals("Ermäßigt")) {
                  preis = zeit * standortpreis * Personenanzahl * 0.8;
@@ -155,15 +160,8 @@ public class BenutzeroberflächeTherme extends JFrame {
             if (choose.equals("Erwachsen")) {
                  preis = zeit * standortpreis * Personenanzahl;
             }
-
             Buchungen b1 = new Buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
             model.addElement(b1);
-
-            // Exception handeling
-            // Juit Test
-            // UML Diagramm
-            // Tätigkeitsprotokoll
-            // Video
         }
         public void filtern() {
                 DefaultListModel model2 = new DefaultListModel<>();
@@ -178,4 +176,8 @@ public class BenutzeroberflächeTherme extends JFrame {
                 }
             }
         }
-
+// Exception handeling
+// Juit Test
+// UML Diagramm
+// Tätigkeitsprotokoll
+// Video
