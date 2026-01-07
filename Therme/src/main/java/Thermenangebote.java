@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BenutzeroberflächeTherme extends JFrame {
+public class Thermenangebote extends JFrame {
 
     String name;
     int Personenanzahl;
@@ -40,7 +40,7 @@ public class BenutzeroberflächeTherme extends JFrame {
     //Listenerstellung
     DefaultListModel<Buchungen> model = new DefaultListModel<>();
 
-    public BenutzeroberflächeTherme() {
+    public Thermenangebote() {
         setTitle("HelloWorld Thermenangebote");
         setSize(850, 600);
         setContentPane(mainPanel);
@@ -123,7 +123,7 @@ public class BenutzeroberflächeTherme extends JFrame {
     }
 
     void main(String[] args) {
-        new BenutzeroberflächeTherme();
+        new Thermenangebote();
     }
 
     public void initObjekte() {
@@ -256,7 +256,6 @@ public class BenutzeroberflächeTherme extends JFrame {
                 }
             }
         }
-// Exception Handling bei cb
 // Objektliste im Codespeichern
 //Objektliste resetten bei Neustart
 // Juit Test
