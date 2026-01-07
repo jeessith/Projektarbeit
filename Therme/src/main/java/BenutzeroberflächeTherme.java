@@ -137,6 +137,18 @@ public class BenutzeroberflächeTherme extends JFrame {
     }
 
     public void Buchungserstellungen() {
+
+        if (cbStandortwahl.getSelectedItem().equals("Bitte wählen...") ||
+                cbTarifauswahl.getSelectedItem().equals("Bitte wählen...") ||
+                cbAufenthaltsdauerTherme.getSelectedItem().equals("Bitte wählen...")) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Bitte wählen Sie überall etwas aus.",
+                    "Fehler",
+                    JOptionPane.ERROR_MESSAGE);
+            return; // Abbrechen, wenn nicht alles ausgewählt ist
+        }
+
         name = cbStandortwahl.getSelectedItem().toString();
 
         try{
@@ -244,7 +256,9 @@ public class BenutzeroberflächeTherme extends JFrame {
                 }
             }
         }
-// Exception handeling
+// Exception Handling bei cb
+// Objektliste im Codespeichern
+//Objektliste resetten bei Neustart
 // Juit Test
 // UML Diagramm
 // Tätigkeitsprotokoll
