@@ -3,6 +3,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BenutzeroberflächeTherme extends JFrame {
+
+    String name;
+    int Personenanzahl;
+    String Tarif;
+    String Aufenhaltsdauer;
+
+    // Preis berechnung
+    double zeit;
+    double standortpreis;
+
+    String choose2;
+    String choose1;
+
+    int maxPreis;
+
+
     private JLabel lblStandortauswahl;
     private JComboBox cbStandortwahl;
     private JLabel lblBarrierefreiheit;
@@ -121,16 +137,33 @@ public class BenutzeroberflächeTherme extends JFrame {
     }
 
     public void Buchungserstellungen() {
-        String name = cbStandortwahl.getSelectedItem().toString();
-        int Personenanzahl = Integer.parseInt(txtPersonenanzahl.getText());
-        String Tarif = cbTarifauswahl.getSelectedItem().toString();
-        String Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
+        name = cbStandortwahl.getSelectedItem().toString();
+
+        try{
+            if(txtPersonenanzahl.getText().trim().isEmpty()){
+                throw new Exception("Leeres Feld");
+            }
+
+
+        try{
+            Personenanzahl = Integer.parseInt(txtPersonenanzahl.getText());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Bitte geben Sie eine Zahl ein.",
+                    "Fehler",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        Tarif = cbTarifauswahl.getSelectedItem().toString();
+        Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
 
         // Preis berechnung
-        double zeit = 0;
-        double standortpreis = 0;
+        zeit = 0;
+        standortpreis = 0;
 
-        String choose2 = cbStandortwahl.getSelectedItem().toString();
+        choose2 = cbStandortwahl.getSelectedItem().toString();
         if (choose2.equals("Ulm")) {
             standortpreis = 10.49;
         }
@@ -162,10 +195,45 @@ public class BenutzeroberflächeTherme extends JFrame {
             }
             Buchungen b1 = new Buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
             model.addElement(b1);
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Sie haben nicht alle Felder ausgefüllt.",
+                    "Fehler",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
+        }
+
+
         public void filtern() {
                 DefaultListModel model2 = new DefaultListModel<>();
-                int maxPreis = Integer.parseInt(txtFiltern.getText());
+
+            try{
+                if(txtFiltern.getText().trim().isEmpty()){
+                    throw new Exception("Leeres Feld");
+                }
+
+
+                try {
+                    maxPreis = Integer.parseInt(txtFiltern.getText());
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Bitte geben Sie eine Zahl ein.",
+                            "Fehler",
+                            JOptionPane.ERROR_MESSAGE
+                );
+            }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Sie haben nicht alle Felder ausgefüllt.",
+                        "Fehler",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
 
                 for (int i = 0; i < list1.getModel().getSize(); i++) {
                     Buchungen element = (Buchungen) list1.getModel().getElementAt(i);
@@ -181,3 +249,8 @@ public class BenutzeroberflächeTherme extends JFrame {
 // UML Diagramm
 // Tätigkeitsprotokoll
 // Video
+
+//Oberfläche vs Nutzklasse (Objektgenerierung) -> zwei Klassen
+//Oberfläche zur Obejektspeicherung
+//Objektklasse auslagern
+//Projektarbeit inkl. Befragung: 35P
