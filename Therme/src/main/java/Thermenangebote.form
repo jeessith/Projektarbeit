@@ -62,7 +62,7 @@
           <text value="Bewertung"/>
         </properties>
       </component>
-      <component id="9e38c" class="javax.swing.JButton" binding="cbFiltern">
+      <component id="9e38c" class="javax.swing.JButton" binding="btnFiltern">
         <constraints>
           <grid row="10" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -70,7 +70,7 @@
           <text value="nach Preis filtern"/>
         </properties>
       </component>
-      <component id="6875" class="javax.swing.JButton" binding="cbSpeichern">
+      <component id="6875" class="javax.swing.JButton" binding="btnSpeichern">
         <constraints>
           <grid row="9" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

@@ -4,31 +4,29 @@ import java.awt.event.ActionListener;
 
 public class Thermenangebote extends JFrame {
 
+    //Festlegung (Deklaration) der Datentypen und deren Benennung
     String name;
     int Personenanzahl;
     String Tarif;
     String Aufenhaltsdauer;
-
-    // Preis berechnung
     double zeit;
     double standortpreis;
-
     String choose2;
     String choose1;
-
     int maxPreis;
+    double preis;
 
-
+    //Komponenten der Benutzeroberfläche
     private JLabel lblStandortauswahl;
     private JComboBox cbStandortwahl;
     private JLabel lblBarrierefreiheit;
     private JLabel lblPersonenanzahl;
     private JTextField txtPersonenanzahl;
     private JComboBox cbAufenthaltsdauerTherme;
-    private JButton cbSpeichern;
+    private JButton btnSpeichern;
     private JLabel lblOeffnungszeiten;
     private JLabel lblBewertung;
-    private JButton cbFiltern;
+    private JButton btnFiltern;
     private JPanel mainPanel;
     private JList list1;
     private JLabel lblTarifauswahl;
@@ -40,6 +38,7 @@ public class Thermenangebote extends JFrame {
     //Listenerstellung
     DefaultListModel<Buchungen> model = new DefaultListModel<>();
 
+    //allgemeine Einstellungen der Benutzeroberfläche
     public Thermenangebote() {
         setTitle("HelloWorld Thermenangebote");
         setSize(850, 600);
@@ -49,24 +48,18 @@ public class Thermenangebote extends JFrame {
         list1.setModel(model);
         initObjekte();
 
+        //Elemente der Comboboxen
         cbStandortwahl.addItem("Bitte wählen...");
         cbStandortwahl.addItem("Ulm");
         cbStandortwahl.addItem("Regensburg");
         cbStandortwahl.addItem("Kempten");
-        cbTarifauswahl.addItem("Bitte wählen...");
-        cbTarifauswahl.addItem("Ermäßigt");
-        cbTarifauswahl.addItem("Erwachsen");
-
-        lblOeffnungszeiten.setVisible(false);
-        lblBarrierefreiheit.setVisible(false);
-        lblBewertung.setVisible(false);
 
         cbStandortwahl.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String ausgewaehlt = (String) cbStandortwahl.getSelectedItem();
 
-                //Eigenschaften unsichtbar bei keiner Auswahl
+                //Attribute der Elemente innerhalb der Comboboxen unsichtbar, wenn noch keine Auswahl getroffen wurde
                 if (ausgewaehlt == null || ausgewaehlt.isEmpty()) {
                     lblOeffnungszeiten.setVisible(false);
                     lblBarrierefreiheit.setVisible(false);
@@ -102,19 +95,27 @@ public class Thermenangebote extends JFrame {
             }
         });
 
-
         cbAufenthaltsdauerTherme.addItem("Bitte wählen...");
         cbAufenthaltsdauerTherme.addItem("2h");
         cbAufenthaltsdauerTherme.addItem("4h");
         cbAufenthaltsdauerTherme.addItem("Tageskarte (bis zu 10h)");
 
-        cbSpeichern.addActionListener(new ActionListener() {
+        cbTarifauswahl.addItem("Bitte wählen...");
+        cbTarifauswahl.addItem("Ermäßigt");
+        cbTarifauswahl.addItem("Erwachsen");
+
+        lblOeffnungszeiten.setVisible(false);
+        lblBarrierefreiheit.setVisible(false);
+        lblBewertung.setVisible(false);
+
+        //Funktionen der Button
+        btnSpeichern.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Buchungserstellungen();
             }
         });
-        cbFiltern.addActionListener(new ActionListener() {
+        btnFiltern.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filtern();
@@ -122,15 +123,16 @@ public class Thermenangebote extends JFrame {
         });
     }
 
+    //Initialisierung der vorgespeicherten Objekte
     void main(String[] args) {
         new Thermenangebote();
     }
-
     public void initObjekte() {
         Buchungen b1 = new Buchungen("Therme HelloWorld Ulm", 2, "Ermäßigt", "4h", 100.0);
         Buchungen b2 = new Buchungen("Therme HelloWorld Regensburg", 4, "Erwachsen", "Tageskarte (bis zu 10h)", 300.0);
         Buchungen b3 = new Buchungen("Therme HelloWorld Kempten", 1, "Erwachsen", "2h", 50.0);
 
+        //Hinzufügen der vorgespeicherten Objekte in die Liste
         model.addElement(b1);
         model.addElement(b2);
         model.addElement(b3);
@@ -138,77 +140,79 @@ public class Thermenangebote extends JFrame {
 
     public void Buchungserstellungen() {
 
+        //Exception Handling: Prüfung, ob in den Comboboxen eine Auswahl getroffen wurde
         if (cbStandortwahl.getSelectedItem().equals("Bitte wählen...") ||
                 cbTarifauswahl.getSelectedItem().equals("Bitte wählen...") ||
                 cbAufenthaltsdauerTherme.getSelectedItem().equals("Bitte wählen...")) {
 
             JOptionPane.showMessageDialog(this,
-                    "Bitte wählen Sie überall etwas aus.",
+                    "Bitte treffen Sie überall eine Auswahl.",
                     "Fehler",
                     JOptionPane.ERROR_MESSAGE);
-            return; // Abbrechen, wenn nicht alles ausgewählt ist
+            return;
         }
-
         name = cbStandortwahl.getSelectedItem().toString();
 
-        try{
-            if(txtPersonenanzahl.getText().trim().isEmpty()){
+        //Exception Handling
+        try { //Prüfung, ob das Eingabefeld der Personenanzahl leer ist
+            if (txtPersonenanzahl.getText().trim().isEmpty()) {
                 throw new Exception("Leeres Feld");
             }
+            try { //Prüfung, ob der korrekte Datentyp beim Eingabefeld der Personenanzahl verwendet wurde
+                Personenanzahl = Integer.parseInt(txtPersonenanzahl.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Bitte geben Sie eine Zahl ein.",
+                        "Fehler",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
 
+            Tarif = cbTarifauswahl.getSelectedItem().toString();
+            Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
 
-        try{
-            Personenanzahl = Integer.parseInt(txtPersonenanzahl.getText());
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Bitte geben Sie eine Zahl ein.",
-                    "Fehler",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
+            //Preisberechnung
+            zeit = 0;
+            standortpreis = 0;
 
-        Tarif = cbTarifauswahl.getSelectedItem().toString();
-        Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
+            choose2 = cbStandortwahl.getSelectedItem().toString(); //Entnehmen der Standortwahl und Festlegung des Standortpreises
+            if (choose2.equals("Ulm")) {
+                standortpreis = 10.49;
+            }
+            if (choose2.equals("Kempten")) {
+                standortpreis = 12.49;
+            }
+            if (choose2.equals("Regensburg")) {
+                standortpreis = 8.49;
+            }
 
-        // Preis berechnung
-        zeit = 0;
-        standortpreis = 0;
-
-        choose2 = cbStandortwahl.getSelectedItem().toString();
-        if (choose2.equals("Ulm")) {
-            standortpreis = 10.49;
-        }
-        if (choose2.equals("Kempten")) {
-            standortpreis = 12.49;
-        }
-        if (choose2.equals("Regensburg")) {
-            standortpreis = 8.49;
-        }
-
-            String choose1 = cbAufenthaltsdauerTherme.getSelectedItem().toString();
+            choose1 = cbAufenthaltsdauerTherme.getSelectedItem().toString(); //Entnehmen der Aufenthaltsdauer und Festlegung der Stundenanzahl
             if (choose1.equals("2h")) {
                 zeit = 2;
             }
             if (choose1.equals("4h")) {
                 zeit = 4;
             }
-        if (choose1.equals("Tageskarte (bis zu 10h)")) {
-            zeit = 10;
-        }
+            if (choose1.equals("Tageskarte (bis zu 10h)")) {
+                zeit = 10;
+            }
 
-            double preis = 0;
+            preis = 0;
             String choose = cbTarifauswahl.getSelectedItem().toString();
-            if (choose.equals("Ermäßigt")) {
-                 preis = zeit * standortpreis * Personenanzahl * 0.8;
+            if (choose.equals("Ermäßigt")) { //Entnehmen der Tarifauswahl
+                preis = zeit * standortpreis * Personenanzahl * 0.8; //Preisberechnung Ermäßigt (20% Rabatt)
             }
-            if (choose.equals("Erwachsen")) {
-                 preis = zeit * standortpreis * Personenanzahl;
+            if (choose.equals("Erwachsen")) { //Entnehmen der Tarifauswahl
+                preis = zeit * standortpreis * Personenanzahl; //Preisberechnung Erwachsen
             }
+
+            //Erstellung und Hinzufügen der durch die Nutzer erstellten Objekte in die Liste
             Buchungen b1 = new Buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
             model.addElement(b1);
 
-        }catch(Exception e){
+        // Exeption Handling: Prüfung, ob das Eingabefeld der Filterfunktion leer ist
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(
                     this,
                     "Sie haben nicht alle Felder ausgefüllt.",
@@ -216,46 +220,47 @@ public class Thermenangebote extends JFrame {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        }
+    }
 
+    //Exception Handling
+    public void filtern() {
+        DefaultListModel model2 = new DefaultListModel<>();
 
-        public void filtern() {
-                DefaultListModel model2 = new DefaultListModel<>();
-
-            try{
-                if(txtFiltern.getText().trim().isEmpty()){
-                    throw new Exception("Leeres Feld");
-                }
-
-
-                try {
-                    maxPreis = Integer.parseInt(txtFiltern.getText());
-                }catch(Exception e){
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Bitte geben Sie eine Zahl ein.",
-                            "Fehler",
-                            JOptionPane.ERROR_MESSAGE
-                );
+        try { //Prüfung, ob das Eingabefeld der Filterfunktion leer ist
+            if (txtFiltern.getText().trim().isEmpty()) { //Prüfung, ob das Eingabefeld leer ist
+                throw new Exception("Leeres Feld");
             }
-            }catch(Exception e){
+
+
+            try {
+                maxPreis = Integer.parseInt(txtFiltern.getText());
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "Sie haben nicht alle Felder ausgefüllt.",
+                        "Bitte geben Sie eine Zahl ein.",
                         "Fehler",
                         JOptionPane.ERROR_MESSAGE
                 );
             }
-
-                for (int i = 0; i < list1.getModel().getSize(); i++) {
-                    Buchungen element = (Buchungen) list1.getModel().getElementAt(i);
-
-                    if (maxPreis <= element.preis)
-                        list1.setModel(model2);
-                    model2.addElement(element);
-                }
-            }
+        } catch (Exception e) { //Prüfung, ob der korrekte Datentyp beim Eingabefeld der Filterfunktion verwendet wurde
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Sie haben nicht alle Felder ausgefüllt.",
+                    "Fehler",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
+
+        //??
+        for (int i = 0; i < list1.getModel().getSize(); i++) {
+            Buchungen element = (Buchungen) list1.getModel().getElementAt(i);
+
+            if (maxPreis <= element.preis)
+                list1.setModel(model2);
+            model2.addElement(element);
+        }
+    }
+}
 // Objektliste im Codespeichern
 //Objektliste resetten bei Neustart
 // Juit Test

@@ -11,7 +11,7 @@ public class Buchungen extends JFrame {
         protected String aufenthaltsauer;
         protected double preis;
 
-    //Konstruktor:
+        //Konstruktor:
         public Buchungen(String name, int personenanzahl, String tarif, String aufenthaltsauer, double preis) throws HeadlessException {
         this.name = name;
         this.personenanzahl = personenanzahl;
@@ -19,6 +19,8 @@ public class Buchungen extends JFrame {
         this.aufenthaltsauer = aufenthaltsauer;
         this.preis = preis;
     }
+
+    //Stinglist
     @Override
     public String toString() {
         return "Buchungen" +
