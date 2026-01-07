@@ -12,7 +12,7 @@ public class BenutzeroberflächeTherme extends JFrame {
     private JButton cbSpeichern;
     private JLabel lblOeffnungszeiten;
     private JLabel lblBewertung;
-    private JButton cbPreisberechnung;
+    private JButton cbFiltern;
     private JPanel mainPanel;
     private JList list1;
     private JLabel lblTarifauswahl;
@@ -98,7 +98,7 @@ public class BenutzeroberflächeTherme extends JFrame {
                 Buchungserstellungen();
             }
         });
-        cbPreisberechnung.addActionListener(new ActionListener() {
+        cbFiltern.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filtern();
