@@ -35,22 +35,37 @@ public class Thermenangebote extends JFrame {
     protected JLabel lblAufenthaltsdauer;
     protected JTextField txtFiltern;
     protected JLabel lblFiltern;
+    private JPanel FormatierungsPanel1;
+    private JPanel FormatierungsPanel2;
+    private JPanel FormatierungsPanel3;
+    private JScrollPane scp1;
 
     //Listenerstellung
     DefaultListModel<buchungen> model = new DefaultListModel<>();
 
     //allgemeine Einstellungen der Benutzeroberfläche
     public Thermenangebote() {
-        setTitle("HelloWorld Thermenangebote");
-        setSize(850, 600);
+        setTitle("Erstellen und Vergleichen Sie unsere HelloWorld Thermenangebote!");
+        setSize(1100, 600);
         setContentPane(mainPanel);
-        setVisible(true);
-
-        mainPanel.setBackground(new Color(143, 227, 214)); //Quelle: ChatGPT
 
         //Verbindung der Liste aus UI mit der StringList
         list1.setModel(model);
         initObjekte();
+
+        //Formatierung der Liste, Quelle: ChatGPT
+        list1.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setText("<html>" + value.toString().replace("\n", "<br>") + "</html>");
+                label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Abstand innen
+                return label;
+            }
+        });
+
+        list1.setFixedCellHeight(-1); // erlaubt variable Höhe
 
         //Elemente der Comboboxen
         cbStandortwahl.addItem("Bitte wählen...");
@@ -85,15 +100,15 @@ public class Thermenangebote extends JFrame {
                     if (ausgewaehlt.equals("Ulm")) {
                         lblOeffnungszeiten.setText("Öffnungszeiten: Mo–Fr 10:00–21:00");
                         lblBarrierefreiheit.setText("Barrierefrei: Ja");
-                        lblBewertung.setText("Bewertung: 4,6 Sterne");
+                        lblBewertung.setText("Bewertung: 4,4 Sterne");
                     } else if (ausgewaehlt.equals("Regensburg")) {
                         lblOeffnungszeiten.setText("Öffnungszeiten: Mo–So 09:00–22:00");
                         lblBarrierefreiheit.setText("Barrierefrei: Ja");
-                        lblBewertung.setText("Bewertung: 4,4 Sterne");
+                        lblBewertung.setText("Bewertung: 4,9 Sterne");
                     } else if (ausgewaehlt.equals("Kempten")) {
                         lblOeffnungszeiten.setText("Öffnungszeiten: Mo–So 08:00–20:00");
-                        lblBarrierefreiheit.setText("Barrierefrei: Ja");
-                        lblBewertung.setText("Bewertung: 4,2 Sterne");
+                        lblBarrierefreiheit.setText("Barrierefrei: Nein");
+                        lblBewertung.setText("Bewertung: 3,2 Sterne");
                     }
                 }
             }
@@ -119,6 +134,7 @@ public class Thermenangebote extends JFrame {
                 buchungserstellungen();
             }
         });
+
         btnFiltern.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,8 +145,11 @@ public class Thermenangebote extends JFrame {
 
     //Initialisierung der vorgespeicherten Objekte
     void main(String[] args) {
-        new Thermenangebote();
-    }
+            SwingUtilities.invokeLater(() -> { //Quelle: ChatGPT
+                new Thermenangebote().setVisible(true);
+            });
+        }
+
     public void initObjekte() {
         buchungen b1 = new buchungen("Therme HelloWorld Ulm", 2, "4h", "Ermäßigt", 67.14);
         buchungen b2 = new buchungen("Therme HelloWorld Regensburg", 4, "Tageskarte (bis zu 10h)", "Erwachsen", 339.60);

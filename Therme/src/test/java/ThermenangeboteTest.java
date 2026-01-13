@@ -9,38 +9,38 @@ class ThermenangeboteTest {
     @Test
     void buchungserstellungen() throws Exception {
 
-        //neues Objekt, dass den Test simuliert
-        Thermenangebote ui = new Thermenangebote();
+        //Simulation eines neuen Objektes (als würde die Benutzeroberfläche ausgeführt werden)
+        Thermenangebote benutzeroberflaeche = new Thermenangebote();
 
-        //Zugriff auf die Felder, in denen eine Eingabe getätigt wird
-        JComboBox<String> cbStandortwahl = getField(ui, "cbStandortwahl");
-        JComboBox<String> cbTarifauswahl = getField(ui, "cbTarifauswahl");
-        JComboBox<String> cbAufenthaltsdauerTherme = getField(ui, "cbAufenthaltsdauerTherme");
-        JTextField txtPersonenanzahl = getField(ui, "txtPersonenanzahl");
-        DefaultListModel<?> model = getField(ui, "model");
+        //Simulation der Eingabefelder (als würde man etwas in die Benutzeroberfläche eingeben)
+        JComboBox<String> cbStandortwahl = getField(benutzeroberflaeche, "cbStandortwahl");
+        JComboBox<String> cbTarifauswahl = getField(benutzeroberflaeche, "cbTarifauswahl");
+        JComboBox<String> cbAufenthaltsdauerTherme = getField(benutzeroberflaeche, "cbAufenthaltsdauerTherme");
+        JTextField txtPersonenanzahl = getField(benutzeroberflaeche, "txtPersonenanzahl");
+        DefaultListModel<?> model = getField(benutzeroberflaeche, "model");
 
         //Simulation der Eingaben
-        cbStandortwahl.setSelectedItem("Ulm");          // Standortpreis = 10.49
-        cbTarifauswahl.setSelectedItem("Erwachsen");    // Kein Rabatt
-        cbAufenthaltsdauerTherme.setSelectedItem("4h"); // 4 Stunden
-        txtPersonenanzahl.setText("2");                 // 2 Personen
+        cbStandortwahl.setSelectedItem("Ulm");
+        cbTarifauswahl.setSelectedItem("Erwachsen");
+        cbAufenthaltsdauerTherme.setSelectedItem("4h");
+        txtPersonenanzahl.setText("2");
 
-        //Methode aufrufen
-        ui.buchungserstellungen();
+        //Methode "Buchungserstellung" aufrufen
+        benutzeroberflaeche.buchungserstellungen();
 
-        //Element, das wir gerade erstellt haben, aus der Liste holen
+        //Buchung, die gerade erstellt wurde, wird aus der Liste ausgelesen
         Object lastBooking = model.getElementAt(model.getSize() - 1);
 
         //Preis auslesen
         Field preisField = lastBooking.getClass().getDeclaredField("preis");
         preisField.setAccessible(true);
-        double actualPreis = (double) preisField.get(lastBooking);
+        double tatsaechlicherPreis = (double) preisField.get(lastBooking);
 
-        //Erwarteter Preis: 4h * 10.49 * 2 Personen = 83.92
-        double expectedPreis = 4 * 10.49 * 2;
+        //Berechnung des erwarteten Preises
+        double erwarteterPreis = 4 * 10.49 * 2;
 
-        //Vergleich
-        assertEquals(expectedPreis, actualPreis, 0.01);
+        //Vergleich erwartetes und tatsächliches Ergebnis
+        assertEquals(erwarteterPreis, tatsaechlicherPreis, 0.01);
     }
 
     //Hilfsmethode für Reflection

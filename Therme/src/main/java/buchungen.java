@@ -20,13 +20,17 @@ public class buchungen extends JFrame {
     }
 
     //Stinglist
+
     @Override
     public String toString() {
-        return "Buchungen" +
-                "name:" + name + " personenanzahl=" + personenanzahl + " tarif=" + tarif + " aufenthaltsauer=" + aufenthaltsauer + " preis=" + preis;
-
+        return name +
+                "\nPersonenanzahl: " + personenanzahl +
+                "\nAufenthaltsdauer: " + aufenthaltsauer +
+                "\nTarif: " + tarif +
+                "\nPreis: " + preis + " €";
     }
 }
+
 //Objekte in der Liste
 //\n bei der Listenspeicherung
 //
