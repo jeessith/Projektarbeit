@@ -5,39 +5,39 @@ import java.awt.event.ActionListener;
 
 public class Thermenangebote extends JFrame {
 
-    //Festlegung (Deklaration) der Datentypen
-    String name;
-    int Personenanzahl;
-    String Tarif;
-    String Aufenhaltsdauer;
-    double zeit;
-    double standortpreis;
-    String choose2;
-    String choose1;
-    int maxPreis;
-    double preis;
+    //Deklaration der Datentypen
+    protected String name;
+    protected int Personenanzahl;
+    protected String Tarif;
+    protected String Aufenhaltsdauer;
+    protected double zeit;
+    protected double standortpreis;
+    protected String choose2;
+    protected String choose1;
+    protected int maxPreis;
+    protected double preis;
 
     //Komponenten der Benutzeroberfläche
-    private JLabel lblStandortauswahl;
-    private JComboBox cbStandortwahl;
-    private JLabel lblBarrierefreiheit;
-    private JLabel lblPersonenanzahl;
-    private JTextField txtPersonenanzahl;
-    private JComboBox cbAufenthaltsdauerTherme;
-    private JButton btnSpeichern;
-    private JLabel lblOeffnungszeiten;
-    private JLabel lblBewertung;
-    private JButton btnFiltern;
-    private JPanel mainPanel;
-    private JList list1;
-    private JLabel lblTarifauswahl;
-    private JComboBox cbTarifauswahl;
-    private JLabel lblAufenthaltsdauer;
-    private JTextField txtFiltern;
-    private JLabel lblFiltern;
+    protected JLabel lblStandortauswahl;
+    protected JComboBox cbStandortwahl;
+    protected JLabel lblBarrierefreiheit;
+    protected JLabel lblPersonenanzahl;
+    protected JTextField txtPersonenanzahl;
+    protected JComboBox cbAufenthaltsdauerTherme;
+    protected JButton btnSpeichern;
+    protected JLabel lblOeffnungszeiten;
+    protected JLabel lblBewertung;
+    protected JButton btnFiltern;
+    protected JPanel mainPanel;
+    protected JList list1;
+    protected JLabel lblTarifauswahl;
+    protected JComboBox cbTarifauswahl;
+    protected JLabel lblAufenthaltsdauer;
+    protected JTextField txtFiltern;
+    protected JLabel lblFiltern;
 
     //Listenerstellung
-    DefaultListModel<Buchungen> model = new DefaultListModel<>();
+    DefaultListModel<buchungen> model = new DefaultListModel<>();
 
     //allgemeine Einstellungen der Benutzeroberfläche
     public Thermenangebote() {
@@ -116,7 +116,7 @@ public class Thermenangebote extends JFrame {
         btnSpeichern.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Buchungserstellungen();
+                buchungserstellungen();
             }
         });
         btnFiltern.addActionListener(new ActionListener() {
@@ -132,9 +132,9 @@ public class Thermenangebote extends JFrame {
         new Thermenangebote();
     }
     public void initObjekte() {
-        Buchungen b1 = new Buchungen("Therme HelloWorld Ulm", 2, "Ermäßigt", "4h", 100.0);
-        Buchungen b2 = new Buchungen("Therme HelloWorld Regensburg", 4, "Erwachsen", "Tageskarte (bis zu 10h)", 300.0);
-        Buchungen b3 = new Buchungen("Therme HelloWorld Kempten", 1, "Erwachsen", "2h", 50.0);
+        buchungen b1 = new buchungen("Therme HelloWorld Ulm", 2, "Ermäßigt", "4h", 100.0);
+        buchungen b2 = new buchungen("Therme HelloWorld Regensburg", 4, "Erwachsen", "Tageskarte (bis zu 10h)", 300.0);
+        buchungen b3 = new buchungen("Therme HelloWorld Kempten", 1, "Erwachsen", "2h", 50.0);
 
         //Hinzufügen der vorgespeicherten Objekte in die Liste
         model.addElement(b1);
@@ -142,7 +142,7 @@ public class Thermenangebote extends JFrame {
         model.addElement(b3);
     }
 
-    public void Buchungserstellungen() {
+    public void buchungserstellungen() {
 
         //Exception Handling: Prüfung, ob in den Comboboxen eine Auswahl getroffen wurde
         if (cbStandortwahl.getSelectedItem().equals("Bitte wählen...") ||
@@ -212,10 +212,10 @@ public class Thermenangebote extends JFrame {
             }
 
             //Erstellung und Hinzufügen der durch die Nutzer erstellten Objekte in die Liste
-            Buchungen b1 = new Buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
+            buchungen b1 = new buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
             model.addElement(b1);
 
-        // Exeption Handling: Prüfung, ob das Eingabefeld der Filterfunktion leer ist
+        //Exeption Handling: Prüfung, ob das Eingabefeld der Filterfunktion leer ist
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                     this,
@@ -257,7 +257,7 @@ public class Thermenangebote extends JFrame {
 
         //??
         for (int i = 0; i < list1.getModel().getSize(); i++) {
-            Buchungen element = (Buchungen) list1.getModel().getElementAt(i);
+            buchungen element = (buchungen) list1.getModel().getElementAt(i);
 
             if (maxPreis <= element.preis)
                 list1.setModel(model2);
@@ -266,13 +266,6 @@ public class Thermenangebote extends JFrame {
     }
 }
 // Objektliste im Codespeichern
-//Objektliste resetten bei Neustart
-// Juit Test
-// UML Diagramm
+// Objektliste resetten bei Neustart
 // Tätigkeitsprotokoll
 // Video
-
-//Oberfläche vs Nutzklasse (Objektgenerierung) -> zwei Klassen
-//Oberfläche zur Obejektspeicherung
-//Objektklasse auslagern
-//Projektarbeit inkl. Befragung: 35P

@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.prefs.PreferenceChangeListener;
 
-public class Buchungen extends JFrame {
+public class buchungen extends JFrame {
 
         //Festlegung der Attribute:
         protected String name;
@@ -12,7 +11,7 @@ public class Buchungen extends JFrame {
         protected double preis;
 
         //Konstruktor:
-        public Buchungen(String name, int personenanzahl, String tarif, String aufenthaltsauer, double preis) throws HeadlessException {
+        public buchungen(String name, int personenanzahl, String tarif, String aufenthaltsauer, double preis) throws HeadlessException {
         this.name = name;
         this.personenanzahl = personenanzahl;
         this.tarif = tarif;
