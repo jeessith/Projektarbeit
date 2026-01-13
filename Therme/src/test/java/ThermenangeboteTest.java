@@ -26,7 +26,7 @@ class ThermenangeboteTest {
         txtPersonenanzahl.setText("2");                 // 2 Personen
 
         //Methode aufrufen
-        ui.Buchungserstellungen();
+        ui.buchungserstellungen();
 
         //Element, das wir gerade erstellt haben, aus der Liste holen
         Object lastBooking = model.getElementAt(model.getSize() - 1);

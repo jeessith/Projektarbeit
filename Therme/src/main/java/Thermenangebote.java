@@ -46,9 +46,9 @@ public class Thermenangebote extends JFrame {
         setContentPane(mainPanel);
         setVisible(true);
 
-        mainPanel.setBackground(new Color(245, 242, 235)); //Quelle: ChatGPT
+        mainPanel.setBackground(new Color(143, 227, 214)); //Quelle: ChatGPT
 
-        //?
+        //Verbindung der Liste aus UI mit der StringList
         list1.setModel(model);
         initObjekte();
 
@@ -64,7 +64,7 @@ public class Thermenangebote extends JFrame {
                 String ausgewaehlt = (String) cbStandortwahl.getSelectedItem();
 
                 //Attribute der Elemente innerhalb der Comboboxen unsichtbar, wenn noch keine Auswahl getroffen wurde
-                if (ausgewaehlt == null || ausgewaehlt.isEmpty()) {
+                if (ausgewaehlt == null || ausgewaehlt.isEmpty() || ausgewaehlt.equals("Bitte wählen...")) {
                     lblOeffnungszeiten.setVisible(false);
                     lblBarrierefreiheit.setVisible(false);
                     lblBewertung.setVisible(false);
@@ -73,7 +73,7 @@ public class Thermenangebote extends JFrame {
                     lblBarrierefreiheit.setVisible(true);
                     lblBewertung.setVisible(true);
                 }
-                if (ausgewaehlt == null || ausgewaehlt.trim().isEmpty()) {
+                if (ausgewaehlt == null || ausgewaehlt.trim().isEmpty()|| ausgewaehlt.equals("Bitte wählen...")) {
                     lblOeffnungszeiten.setVisible(false);
                     lblBarrierefreiheit.setVisible(false);
                     lblBewertung.setVisible(false);
@@ -132,9 +132,9 @@ public class Thermenangebote extends JFrame {
         new Thermenangebote();
     }
     public void initObjekte() {
-        buchungen b1 = new buchungen("Therme HelloWorld Ulm", 2, "Ermäßigt", "4h", 100.0);
-        buchungen b2 = new buchungen("Therme HelloWorld Regensburg", 4, "Erwachsen", "Tageskarte (bis zu 10h)", 300.0);
-        buchungen b3 = new buchungen("Therme HelloWorld Kempten", 1, "Erwachsen", "2h", 50.0);
+        buchungen b1 = new buchungen("Therme HelloWorld Ulm", 2, "4h", "Ermäßigt", 67.14);
+        buchungen b2 = new buchungen("Therme HelloWorld Regensburg", 4, "Tageskarte (bis zu 10h)", "Erwachsen", 339.60);
+        buchungen b3 = new buchungen("Therme HelloWorld Kempten", 1, "2h", "Erwachsen", 24.98);
 
         //Hinzufügen der vorgespeicherten Objekte in die Liste
         model.addElement(b1);
@@ -211,9 +211,12 @@ public class Thermenangebote extends JFrame {
                 preis = zeit * standortpreis * Personenanzahl; //Preisberechnung Erwachsen
             }
 
+            //auf zwei Nachkommastellen runden
+            preis = Math.round(preis * 100.0) / 100.0;
+
             //Erstellung und Hinzufügen der durch die Nutzer erstellten Objekte in die Liste
             buchungen b1 = new buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
-            model.addElement(b1);
+            model.addElement(b1); //wird hierdurch in der Liste gespeichert
 
         //Exeption Handling: Prüfung, ob das Eingabefeld der Filterfunktion leer ist
         } catch (Exception e) {
@@ -255,7 +258,7 @@ public class Thermenangebote extends JFrame {
             );
         }
 
-        //??
+        //Filter
         for (int i = 0; i < list1.getModel().getSize(); i++) {
             buchungen element = (buchungen) list1.getModel().getElementAt(i);
 
@@ -265,7 +268,6 @@ public class Thermenangebote extends JFrame {
         }
     }
 }
-// Objektliste im Codespeichern
-// Objektliste resetten bei Neustart
+
 // Tätigkeitsprotokoll
 // Video
