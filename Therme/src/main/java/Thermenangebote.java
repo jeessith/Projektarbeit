@@ -1,10 +1,11 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Thermenangebote extends JFrame {
 
-    //Festlegung (Deklaration) der Datentypen und deren Benennung
+    //Festlegung (Deklaration) der Datentypen
     String name;
     int Personenanzahl;
     String Tarif;
@@ -45,6 +46,9 @@ public class Thermenangebote extends JFrame {
         setContentPane(mainPanel);
         setVisible(true);
 
+        mainPanel.setBackground(new Color(245, 242, 235)); //Quelle: ChatGPT
+
+        //?
         list1.setModel(model);
         initObjekte();
 
@@ -227,7 +231,7 @@ public class Thermenangebote extends JFrame {
         DefaultListModel model2 = new DefaultListModel<>();
 
         try { //Prüfung, ob das Eingabefeld der Filterfunktion leer ist
-            if (txtFiltern.getText().trim().isEmpty()) { //Prüfung, ob das Eingabefeld leer ist
+            if (txtFiltern.getText().trim().isEmpty()) {
                 throw new Exception("Leeres Feld");
             }
 
