@@ -10,12 +10,13 @@ public class Thermenangebote extends JFrame {
     protected int Personenanzahl;
     protected String Tarif;
     protected String Aufenhaltsdauer;
-    protected double zeit;
-    protected double standortpreis;
+    protected double zeit = 0;
+    protected double standortpreis = 0;
     protected String choose2;
     protected String choose1;
     protected int maxPreis;
-    protected double preis;
+    public static double preis = 0;
+    public boolean erwachsen;
 
     //Komponenten der Benutzeroberfläche
     protected JLabel lblStandortauswahl;
@@ -35,10 +36,11 @@ public class Thermenangebote extends JFrame {
     protected JLabel lblAufenthaltsdauer;
     protected JTextField txtFiltern;
     protected JLabel lblFiltern;
-    private JPanel FormatierungsPanel1;
-    private JPanel FormatierungsPanel2;
-    private JPanel FormatierungsPanel3;
-    private JScrollPane scp1;
+    protected JPanel FormatierungsPanel1;
+    protected JPanel FormatierungsPanel2;
+    protected JPanel FormatierungsPanel3;
+    protected JScrollPane scp1;
+    protected JPanel FormatierungsPanel4;
 
     //Listenerstellung
     DefaultListModel<buchungen> model = new DefaultListModel<>();
@@ -143,7 +145,7 @@ public class Thermenangebote extends JFrame {
         });
     }
 
-    //Initialisierung der vorgespeicherten Objekte
+    //Initialisierung
     void main(String[] args) {
             SwingUtilities.invokeLater(() -> { //Quelle: ChatGPT
                 new Thermenangebote().setVisible(true);
@@ -155,11 +157,12 @@ public class Thermenangebote extends JFrame {
         buchungen b2 = new buchungen("Therme HelloWorld Regensburg", 4, "Tageskarte (bis zu 10h)", "Erwachsen", 339.60);
         buchungen b3 = new buchungen("Therme HelloWorld Kempten", 1, "2h", "Erwachsen", 24.98);
 
-        //Hinzufügen der vorgespeicherten Objekte in die Liste
+        //Hinzufügen der Objekte in die Liste
         model.addElement(b1);
         model.addElement(b2);
         model.addElement(b3);
     }
+
 
     public void buchungserstellungen() {
 
@@ -174,7 +177,7 @@ public class Thermenangebote extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        name = cbStandortwahl.getSelectedItem().toString();
+        name = "Therme HelloWorld " + cbStandortwahl.getSelectedItem().toString();
 
         //Exception Handling
         try { //Prüfung, ob das Eingabefeld der Personenanzahl leer ist
@@ -194,10 +197,6 @@ public class Thermenangebote extends JFrame {
 
             Tarif = cbTarifauswahl.getSelectedItem().toString();
             Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
-
-            //Preisberechnung
-            zeit = 0;
-            standortpreis = 0;
 
             choose2 = cbStandortwahl.getSelectedItem().toString(); //Entnehmen der Standortwahl und Festlegung des Standortpreises
             if (choose2.equals("Ulm")) {
@@ -221,23 +220,21 @@ public class Thermenangebote extends JFrame {
                 zeit = 10;
             }
 
-            preis = 0;
             String choose = cbTarifauswahl.getSelectedItem().toString();
             if (choose.equals("Ermäßigt")) { //Entnehmen der Tarifauswahl
-                preis = zeit * standortpreis * Personenanzahl * 0.8; //Preisberechnung Ermäßigt (20% Rabatt)
+                erwachsen = false;
             }
             if (choose.equals("Erwachsen")) { //Entnehmen der Tarifauswahl
-                preis = zeit * standortpreis * Personenanzahl; //Preisberechnung Erwachsen
+                erwachsen = true;
             }
-
-            //auf zwei Nachkommastellen runden
-            preis = Math.round(preis * 100.0) / 100.0;
+            //ruft die Methode preisBerechnung auf und gibt ihr alle wichtige Infos zur Berechnung mit
+            preis = preisBerechnung(standortpreis,zeit,erwachsen,Personenanzahl);
 
             //Erstellung und Hinzufügen der durch die Nutzer erstellten Objekte in die Liste
-            buchungen b1 = new buchungen(name, Personenanzahl, Tarif, Aufenhaltsdauer, preis);
+            buchungen b1 = new buchungen(name, Personenanzahl, Aufenhaltsdauer, Tarif, preis);
             model.addElement(b1); //wird hierdurch in der Liste gespeichert
 
-        //Exeption Handling: Prüfung, ob das Eingabefeld der Filterfunktion leer ist
+        //Exception Handling: Prüfung, ob das Eingabefeld der Filterfunktion leer ist
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                     this,
@@ -248,15 +245,31 @@ public class Thermenangebote extends JFrame {
         }
     }
 
+    //Preisberechnung
+    public static double preisBerechnung(double standortpreis, double zeit, boolean erwachsen, int Personenanzahl){
+        if(erwachsen == true){
+            preis = zeit * standortpreis * Personenanzahl; //Preisberechnung Erwachsen
+        }else {
+            preis = zeit * standortpreis * Personenanzahl * 0.8; //Preisberechnung Ermäßigt (20% Rabatt)
+        }
+
+        //auf zwei Nachkommastellen runden
+        preis = Math.round(preis * 100.0) / 100.0;
+        return preis;
+    }
+
     //Exception Handling
     public void filtern() {
         DefaultListModel model2 = new DefaultListModel<>();
 
         try { //Prüfung, ob das Eingabefeld der Filterfunktion leer ist
             if (txtFiltern.getText().trim().isEmpty()) {
-                throw new Exception("Leeres Feld");
-            }
 
+                JOptionPane.showMessageDialog(this, "Bitte geben Sie zuerst einen maximalen Preis ein.",
+                        "Fehler", JOptionPane.ERROR_MESSAGE);
+                list1.setModel(model); // Originalmodell wieder anzeigen
+                return;
+            }
 
             try {
                 maxPreis = Integer.parseInt(txtFiltern.getText());
@@ -277,13 +290,14 @@ public class Thermenangebote extends JFrame {
             );
         }
 
-        //Filter
-        for (int i = 0; i < list1.getModel().getSize(); i++) {
-            buchungen element = (buchungen) list1.getModel().getElementAt(i);
+        for (int i = 0; i < model.getSize(); i++) {
+            buchungen element = model.getElementAt(i);
 
-            if (maxPreis <= element.preis)
-                list1.setModel(model2);
-            model2.addElement(element);
+            if (element.preis <= maxPreis) {
+                model2.addElement(element);
+            }
+
+            list1.setModel(model2);
         }
     }
 }
