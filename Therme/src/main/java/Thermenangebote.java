@@ -55,7 +55,7 @@ public class Thermenangebote extends JFrame {
         list1.setModel(model);
         initObjekte();
 
-        //Formatierung der Liste, Quelle: ChatGPT
+        //Formatierung der Liste, Quelle: Microsoft Copilot, https://copilot.microsoft.com
         list1.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
@@ -152,6 +152,7 @@ public class Thermenangebote extends JFrame {
             });
         }
 
+    //Objekterstellung
     public void initObjekte() {
         buchungen b1 = new buchungen("Therme HelloWorld Ulm", 2, "4h", "Ermäßigt", 67.14);
         buchungen b2 = new buchungen("Therme HelloWorld Regensburg", 4, "Tageskarte (bis zu 10h)", "Erwachsen", 339.60);
@@ -162,7 +163,6 @@ public class Thermenangebote extends JFrame {
         model.addElement(b2);
         model.addElement(b3);
     }
-
 
     public void buchungserstellungen() {
 
@@ -195,6 +195,7 @@ public class Thermenangebote extends JFrame {
                 );
             }
 
+            //Festlegung der Preise
             Tarif = cbTarifauswahl.getSelectedItem().toString();
             Aufenhaltsdauer = cbAufenthaltsdauerTherme.getSelectedItem().toString();
 
@@ -227,6 +228,7 @@ public class Thermenangebote extends JFrame {
             if (choose.equals("Erwachsen")) { //Entnehmen der Tarifauswahl
                 erwachsen = true;
             }
+
             //ruft die Methode preisBerechnung auf und gibt ihr alle wichtige Infos zur Berechnung mit
             preis = preisBerechnung(standortpreis,zeit,erwachsen,Personenanzahl);
 
@@ -301,6 +303,3 @@ public class Thermenangebote extends JFrame {
         }
     }
 }
-
-// Tätigkeitsprotokoll
-// Video
