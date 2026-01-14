@@ -18,7 +18,7 @@ Die Anwendung simuliert ein **Buchungssystem für Thermenangebote**, bei dem Nut
 
 ---
 
-## 🎯 Projektziele
+## Projektziele
 
 * Anwendung grundlegender Java-Kenntnisse
 * Entwicklung einer grafischen Benutzeroberfläche mit **Swing**
@@ -30,7 +30,7 @@ Die Anwendung simuliert ein **Buchungssystem für Thermenangebote**, bei dem Nut
 
 ---
 
-## 🛠️ Verwendete Technologien
+## Verwendete Technologien
 
 * **Java**
 * **Swing (GUI)**
@@ -39,7 +39,7 @@ Die Anwendung simuliert ein **Buchungssystem für Thermenangebote**, bei dem Nut
 
 ---
 
-## 📌 Fazit
+## Fazit
 
 Das Projekt demonstriert die grundlegenden Konzepte der Java-Programmierung, insbesondere:
 
